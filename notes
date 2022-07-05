@@ -1,0 +1,17 @@
+Plan for coming 2 weeks: build out a simple todo command line app:
+
+session 1
+
+1. show basic TDD workflow to add / list
+2. hit issue where we use a global tasks list = let’s refactor to a Todo class
+3. list take II: be able to remove items, get single item (raise exception if not found), also cannot add same task twice)
+4. a dict is probably better to lookup todos by id, let’s refactor
+5. add another feature: add a way to complete tasks
+6. how are we doing coverage wise? pytest --cov --cov-report=term-missing
+7. add Typer to make command line app
+
+session 2
+
+8. ouch no persistence from command line because in memory data structure, let’s add a csv storage back-end, instead of hardcoding it into our lean Todo class, let’s make it extensible using the repository pattern, for which we’ll use ABC / abstract methods (this step takes a bit hence a separate session)
+9. write tasks to csv
+10. test Typer again
