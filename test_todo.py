@@ -17,6 +17,13 @@ def test_get_todos(todo):
     assert todo.get_todos() == {1: Task("read")}
 
 
+def test_get_single_todo(todo):
+    todo.add_todo("read")
+    todo.add_todo("sleep")
+    assert todo.get_todos(task_id=1) == Task("read")
+    assert todo.get_todos(task_id=2) == Task("sleep")
+
+
 def test_get_todos_with_two_items(todo):
     todo.add_todo("read")
     todo.add_todo("gym")

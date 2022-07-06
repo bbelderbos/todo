@@ -32,8 +32,11 @@ class Todo:
         self.tasks[next_id] = task
         return task
 
-    def get_todos(self):
-        return self.tasks
+    def get_todos(self, task_id=None):
+        if task_id is None:
+            return self.tasks
+        else:
+            return self.tasks[task_id]
 
     def remove_todo(self, idx):
         del self.tasks[idx]
