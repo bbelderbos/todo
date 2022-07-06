@@ -18,8 +18,11 @@ class Todo:
 
     def add_todo(self, description):
         task = Task(description)
-        self.count += 1
-        self.tasks[self.count] = task
+        next_id = max(self.tasks, default=0) + 1
+        if self._task_exists(description):
+            error = f"Task '{description}' already exists"
+            raise TodoException(error)
+        self.tasks[next_id] = task
         return task
 
     def get_todos(self):

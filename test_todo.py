@@ -48,3 +48,12 @@ def test_cannot_mark_non_existing_task_complete(todo):
     todo.add_todo("read")
     with pytest.raises(KeyError):
         todo.mark_complete(2)
+
+
+def test_increases_count_to_next_available_id(todo):
+    todo.add_todo("read")
+    todo.add_todo("gym")
+    todo.add_todo("sleep")
+    todo.remove_todo(3)
+    todo.add_todo("sleep")
+    assert list(todo.get_todos().keys()) == [1, 2, 3]
