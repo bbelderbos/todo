@@ -1,6 +1,6 @@
 import pytest
 
-from todo import Todo, Task
+from todo import Todo, Task, TodoException
 
 
 @pytest.fixture
@@ -57,3 +57,10 @@ def test_increases_count_to_next_available_id(todo):
     todo.remove_todo(3)
     todo.add_todo("sleep")
     assert list(todo.get_todos().keys()) == [1, 2, 3]
+
+
+def test_cannot_add_same_task_twice(todo):
+    todo.add_todo("read")
+    error = f"Task 'read' already exists"
+    with pytest.raises(TodoException, match=error):
+        todo.add_todo("read")

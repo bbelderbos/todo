@@ -7,6 +7,10 @@ class Task:
     done: bool = False
 
 
+class TodoException(Exception):
+    pass
+
+
 class Todo:
 
     def __init__(self, tasks=None):
@@ -14,7 +18,10 @@ class Todo:
             self.tasks = {}
         else:
             self.tasks = tasks
-        self.count = 0
+
+    def _task_exists(self, description):
+        return any(t.description == description
+                   for t in self.tasks.values())
 
     def add_todo(self, description):
         task = Task(description)
