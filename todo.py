@@ -10,7 +10,10 @@ class Task:
 class Todo:
 
     def __init__(self, tasks=None):
-        self.tasks = tasks or {}
+        if tasks is None:
+            self.tasks = {}
+        else:
+            self.tasks = tasks
         self.count = 0
 
     def add_todo(self, description):
