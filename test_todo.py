@@ -35,7 +35,7 @@ def test_remove_todo(todo):
 def test_mark_todo_complete(todo):
     todo.add_todo("read")
     todo.mark_complete(1)
-    assert todo.tasks[1].done == True
+    assert todo.tasks[1].done is True
 
 
 def test_cannot_remove_non_existing_task(todo):
