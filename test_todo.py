@@ -68,6 +68,6 @@ def test_increases_count_to_next_available_id(todo):
 
 def test_cannot_add_same_task_twice(todo):
     todo.add_todo("read")
-    error = f"Task 'read' already exists"
+    error = "Task 'read' already exists"
     with pytest.raises(TodoException, match=error):
         todo.add_todo("read")
