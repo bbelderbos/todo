@@ -8,6 +8,12 @@ def todo():
     return Todo()
 
 
+@pytest.fixture
+def populated_todo():
+    tasks = {1: Task("sleep"), 2: Task("code")}
+    return Todo(tasks)
+
+
 def test_add_todo(todo):
     assert todo.add_todo("gym") == Task("gym")
 
@@ -71,3 +77,9 @@ def test_cannot_add_same_task_twice(todo):
     error = "Task 'read' already exists"
     with pytest.raises(TodoException, match=error):
         todo.add_todo("read")
+
+
+def test_todo_passing_in_test_dict(populated_todo):
+    expected = {1: Task("sleep"), 2: Task("code")}
+    actual = populated_todo.get_todos()
+    assert actual == expected
