@@ -1,17 +1,27 @@
 import pytest
 
-from todo import Todo, Task, TodoException
+from todo import Todo
+from store import Task, TodoException, InMemoryDb
+
+@pytest.fixture
+def db():
+    return InMemoryDb()
 
 
 @pytest.fixture
-def todo():
-    return Todo()
+def todo(db):
+    return Todo(db)
 
 
 @pytest.fixture
-def populated_todo():
+def populated_db(db):
     tasks = {1: Task("sleep"), 2: Task("code")}
-    return Todo(tasks)
+    return InMemoryDb(tasks)
+
+
+@pytest.fixture
+def populated_todo(populated_db):
+    return Todo(populated_db)
 
 
 def test_add_todo(todo):
@@ -48,7 +58,7 @@ def test_remove_todo(todo):
 def test_mark_todo_complete(todo):
     todo.add_todo("read")
     todo.mark_complete(1)
-    assert todo.tasks[1].done is True
+    assert todo.db.tasks[1].done is True
 
 
 def test_cannot_remove_non_existing_task(todo):
