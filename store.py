@@ -89,7 +89,9 @@ class PersistentDb(BaseDb):
         query = self.session.query(TaskTable)
         if task_id is not None:
             query = query.filter(TaskTable.id == task_id)
-        return query.all()
+            return query.first()
+        else:
+            return query.all()
 
     def remove_todo(self, task_id):
         self.session.query(TaskTable).filter(

@@ -10,6 +10,12 @@ def db():
     return PersistentDb(db_env_var)
 
 
+def test_task_repr(db):
+    db.add_todo("gym")
+    task = db.get_todos(task_id=1)
+    assert str(task) == "Task('1', 'gym', 'False')"
+
+
 def test_add_todo(db):
     db.add_todo("gym")
     tasks = db.get_todos()
@@ -23,8 +29,7 @@ def test_add_todo(db):
 def test_get_single_todo(db):
     db.add_todo("gym")
     db.add_todo("sleep")
-    tasks = db.get_todos(task_id=2)
-    task = tasks[0]
+    task = db.get_todos(task_id=2)
     assert task.id == 2
     assert task.description == "sleep"
     assert task.done is False
