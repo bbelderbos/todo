@@ -88,17 +88,16 @@ class PersistentDb(BaseDb):
     def get_todos(self, task_id=None):
         query = self.session.query(TaskTable)
         if task_id is not None:
-            query = query.filter(TaskTable.id == task_id)
-            return query.first()
+            return query.get(task_id)
         else:
             return query.all()
 
     def remove_todo(self, task_id):
-        self.session.query(TaskTable).filter(
-            TaskTable.id == task_id).delete()
+        task = self.session.query(TaskTable).filter_by(id=task_id).delete()
         self.session.commit()
 
     def mark_complete(self, task_id):
-        self.session.query(TaskTable).filter(
-            TaskTable.id == task_id).update({"done": True})
+        task = self.session.query(TaskTable).get(task_id)
+        task.done = True
+        self.session.add(task)
         self.session.commit()
