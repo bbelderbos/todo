@@ -1,13 +1,18 @@
 import pytest
 
 from store import PersistentDb
-from models import Task
 
 
 @pytest.fixture
 def db():
     db_env_var = 'TEST_DATABASE_URL'
     return PersistentDb(db_env_var)
+
+
+def test_task_repr(db):
+    db.add_todo("gym")
+    task = db.get_todos(task_id=1)
+    assert str(task) == "Task('1', 'gym', 'False')"
 
 
 def test_add_todo(db):
@@ -23,8 +28,7 @@ def test_add_todo(db):
 def test_get_single_todo(db):
     db.add_todo("gym")
     db.add_todo("sleep")
-    tasks = db.get_todos(task_id=2)
-    task = tasks[0]
+    task = db.get_todos(task_id=2)
     assert task.id == 2
     assert task.description == "sleep"
     assert task.done is False
@@ -40,6 +44,15 @@ def test_remove_todo(db):
     assert task.id == 1
     assert task.description == "gym"
     assert task.done is False
+
+
+def test_remove_commits_to_db(db):
+    db.add_todo("gym")
+    db.add_todo("sleep")
+    db.remove_todo(2)
+    db.session.rollback()
+    tasks = db.get_todos()
+    assert len(tasks) == 1
 
 
 def test_mark_complete(db):
