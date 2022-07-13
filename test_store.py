@@ -47,6 +47,15 @@ def test_remove_todo(db):
     assert task.done is False
 
 
+def test_remove_commits_to_db(db):
+    db.add_todo("gym")
+    db.add_todo("sleep")
+    db.remove_todo(2)
+    db.session.rollback()
+    tasks = db.get_todos()
+    assert len(tasks) == 1
+
+
 def test_mark_complete(db):
     db.add_todo("gym")
     db.mark_complete(1)
