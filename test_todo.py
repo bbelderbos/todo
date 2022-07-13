@@ -3,6 +3,7 @@ import pytest
 from todo import Todo
 from store import Task, TodoException, InMemoryDb
 
+
 @pytest.fixture
 def db():
     return InMemoryDb()

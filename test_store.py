@@ -1,7 +1,6 @@
 import pytest
 
 from store import PersistentDb
-from models import Task
 
 
 @pytest.fixture

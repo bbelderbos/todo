@@ -93,7 +93,7 @@ class PersistentDb(BaseDb):
             return query.all()
 
     def remove_todo(self, task_id):
-        task = self.session.query(TaskTable).filter_by(id=task_id).delete()
+        self.session.query(TaskTable).filter_by(id=task_id).delete()
         self.session.commit()
 
     def mark_complete(self, task_id):
